@@ -1,5 +1,5 @@
 ---
-title: "IIACS Preparation"
+title: "IACS Preparation"
 author: "Jannes Säurich (ORCID: 0009-0003-4948-128X)"
 date: "2022-12-21"
 output: pdf_document
