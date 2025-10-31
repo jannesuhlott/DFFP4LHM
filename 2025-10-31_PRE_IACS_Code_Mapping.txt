@@ -1,0 +1,27 @@
+Crop Types of Preidl et al. (2020) with IACS Codes
+PRE Code	Name	IACS		
+1	Winter wheat	112, 115, 156
+2	Spelt	1143
+3	Winter rye	121
+4	Winter barley	131
+5	Spring wheat	113, 116, 157
+6	Spring barley	132
+7	Spring oat	143
+8	Maize	411, 171, 172
+9	Legumes	210, 211, 220, 230, 240	
+10	Rapeseed	311
+11	Leeks	633
+12	Potatoes	601, 602
+13	Sugar beets	603	
+14	Strawberries	707
+15	Stone fruits	821, 825, 826
+16	Vines	842, 843
+17	Hops	856
+18	Asparagus	860
+--- excluded ---
+19	Grassland	421, 422, 423, 424, 425, 441, 451, 452, 453, 454, 459		
+20	Urban areas	
+21	Water			
+22	Other vegetation		
+23	forest		
+0	unclassified	

@@ -1,0 +1,28 @@
+Crop Types of Schwieder et al. (2022) with IACS Codes
+SWD Code	Name	IACS
+1101	Winter wheat	112, 115
+1103	Winter rye	121
+1102	Winter barley	131		
+1201	Spring barley	132
+1202	Spring oat	143		
+1300	Maize	171, 172, 177, 410, 411, 412
+1401	Potato	601, 602, 606
+1402	Sugar beet	603
+1501	Winter rapeseed	311
+1502	Sunflower	320
+1611	Peas	210, 240
+1612	Broad bean	220
+1613	Lupin	230
+1614	Soy	330
+1603	Vegetables	610, 613, 630, 632, 633, 634, 635, 637, 638, 707, 860	
+4003	Orchard	821, 824, 825, 826, 983
+4001	Grapevine	843, 844, 847
+4002	Hops	856
+---		excluded ---
+200		Permanent grassland		441, 443, 451, 452, 453, 455, 459
+1602	Cultivated grassland	421, 422, 423, 424, 425, 433
+3001	Small woody features	2, 3, 5
+3002	Other agricultural areas	966, 862, 462, 990, 991, 994, 996, 998
+3003	Fallow land	62, 66, 65, 560, 581, 582, 594, 595, 590
+3004	Other areas	
+3011	small woody features on other land	

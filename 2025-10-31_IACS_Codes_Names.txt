@@ -1,0 +1,65 @@
+IACS Code	Name
+112	 Winter durum wheat  
+113	 Spring durum wheat  
+114	 Winter spelt  
+115	 Winter soft wheat  
+116	 Spring soft wheat  
+121	 Winter rye  
+131	 Winter barley  
+132	 Spring barley  
+143	 Spring oats  
+156	 Winter triticale  
+157	 Summer triticale  
+171	 Maize (without silage maize NC 411)  
+172	 Maize (biogas)  
+177	 Maize other  
+210	 Peas  
+211	 peas  
+220	 Field bean  
+230	 Lupine  
+240	 Peas/beans  
+311	 Winter rape  
+320	 Sunflowers  
+330	 Soya  
+410	 Maize with field bean  
+411	 Silage maize  
+412	 Common silage maize  
+421	 Clover  
+422	 Clover grass  
+423	 Lucerne  
+424	 Field grass  
+425	 Clover-Lucerne  
+433	 Lucerne grass  
+441	 Meadows (grassland reseeding)  
+443	 Willow reseeding  
+451	 Meadows  
+452	 Mowing pastures  
+453	 Pastures  
+454	 Pastures  
+455	 Pastures and alps  
+459	 All other GL uses  
+601	 Starch potatoes  
+602	 Potatoes  
+603	 Sugar beet  
+606	 Seed potatoes  
+610	 Vegetable  
+613	 Vegetable Cabbage  
+630	 Garden squash  
+632	 other vegetables 
+633	 Leek  
+634	 Carrot  
+635	 Garden bean  
+637	 Lettuce  
+638	 Spinach  
+707	 Strawberries  
+821	 Pome fruit, stone fruit  
+824	 other fruit plant  
+825	 Pome fruit  
+826	 Stone fruit  
+842	 Vineyard  
+843	 Stocked vineyard  
+844	
+847	 Vineyard area  
+856	 Hops  
+860	 Asparagus  
+983	 Christmas trees  
