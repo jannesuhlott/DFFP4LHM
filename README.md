@@ -58,4 +58,10 @@ SWD_Codes_Mapping: Contains the mapping of IACS Codes to the defined crop types 
 PRE_Code_Mapping: Contains the mapping of IACS Codes to the defined crop types from [Preid et. al (2020)](https://www.sciencedirect.com/science/article/pii/S0034425720300420?via%3Dihub)
 IACS_Codes_Names: Contains the names of all used IACS Codes.
 
+### SWD Workflow
+This script covers the derivation of the Shannon Evenness Index from the data of [Schwieder et. al (2022)](https://zenodo.org/records/10645427) and the IACS data. During the calculation, the metrics from phases 1 and 2 are derived. 
+
+### PRE Workflow
+This script covers the derivation of the Shannon Evenness Index from the data of [Preid et. al (2020)](https://www.sciencedirect.com/science/article/pii/S0034425720300420?via%3Dihub) and the IACS data. During the calculation, the metrics from phases 1 and 2 are derived. 
+ 
 ## License
