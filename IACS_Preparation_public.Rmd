@@ -1,0 +1,152 @@
+---
+title: "IIACS Preparation"
+author: "Jannes Säurich (ORCID: 0009-0003-4948-128X)"
+date: "2022-12-21"
+output: pdf_document
+---
+
+# Introduction
+
+The IACS data were reprocessed to enable state- and year-specific agricultural analyses. The workflow included geometry correction, creation of unique field identifiers, removal of overlapping polygons, and cropping to federal-state boundaries. Relevant land-use types were selected by filtering out grassland, fodder, woodland, fallow, and other non-crop areas. Polygon areas were calculated and exported as cleaned Shapefiles, providing a consistent basis for subsequent spatial analyses of cropland distribution. The analyses is made for Lower Saxony (LS) and Brandenburg (BB).  
+
+## Packages
+
+Load necessary packages for spatial data handling, data manipulation, and plotting:
+- sp, sf, lwgeom: spatial objects and geometry operations
+- units: handling measurement units
+- ggplot2, tidyverse, dplyr: data manipulation and plotting
+- raster: raster data handling
+- source(): custom functions for indicator calculations
+
+```{r, packages, warning = FALSE, message = FALSE}
+library(sp)
+library(sf)
+library(units)
+library(lwgeom)
+library(ggplot2)
+library(tidyverse)
+library(dplyr)
+library(raster)
+source("~/MonViA_Indikatoren/JU_MonViA/Skripte/Vektor/Functions_Indikatoren.R")
+```
+
+# Methods
+
+## Input
+Read in the IACS Shapefile for a given federal state (fd) and year.
+```{r, IACS_input, warning = FALSE, message = FALSE, results='hide'}
+
+fd <- "LS" # [LS, BB]
+year <- "2019" # [2017, 2018, 2019]
+wd <- paste0(...)
+name <- paste0(fd,"_IACS_", year, "_fixed_cut.shp")
+shp_data <- st_read(paste0(wd, name))
+```
+
+## Geometry Corrections
+```{r, IACS_corrections, warning = FALSE, message = FALSE, results='hide'}
+# Correct potential geometry issues using a zero-width buffer.
+
+shp_buffer <- st_buffer(shp_data, 0)
+shp_data <- shp_buffer
+
+# Create a unique ID for each polygon by combining relevant fields (e.g., FLIK + plot number). Different approaches are used depending on the state cause of data structures. 
+
+# for LS
+shp_HNF <- shp_data %>% 
+  unite(ID, c("FLIK", "SCHLAGNR")) %>% 
+  dplyr::select(ID, I = KULTURCODE) 
+
+# for BB
+shp_HNF <- shp_data %>% 
+  dplyr::filter(tf_typ == "HNF") %>% # für BB
+  dplyr::select(ID=ref_ident, I = code, I_name = code_bez) 
+
+# for BB 2017
+shp_HNF <- shp_data %>% 
+  unite(ID, c("flik", "id")) %>% 
+  dplyr::select(ID, I = nutzcode) 
+shp_data <- shp_HNF
+
+# Save the cleaned Shapefile. 
+st_write(shp_data, ...)
+```
+
+## Multiple Geometries Check
+
+Moreover, a check for double geometries which lay above each other can help to avoid inaccuracies in later calculations. For this, the number k (number of duplicate geometries) is calculated. Polygons whose geometry is identical, i.e. which overlap, count.
+
+```{r, IACS_checkdoublegeometry, warning = FALSE, message = FALSE, results='hide'}
+# Identify polygons that exactly overlap using st_equals().
+equals <- st_equals(shp_data)
+
+# Count how many duplicates exist to avoid errors in later calculations.
+k = 0 # k (Number of multiple geometries)
+for (i in 1:length(equals)) {
+  if (length(equals[[i]]) > 1) {
+    print(i)
+    k = k+1
+  }
+}
+```
+
+## Cropping to Federal State Borders
+
+To ensure that all polygons lie within the state borders, the data set is adjusted to the federal state border. (Alternatively, this is also easily possible in GIS).
+
+```{r, IACS_Zuschneiden, warning = FALSE, message = FALSE, results='hide'}
+
+  # Read federal state boarders
+  LS <- st_read("~/.../borders/LS.shp")
+  BB <- st_read("~/.../borders/BB.shp")
+
+  # cropping
+  shp_I_LS <- st_intersection(shp_buffer, LS)
+  shp_I_BB <- st_intersection(shp_buffer, BB)
+
+  # saving
+  st_write(shp_I_LS, ...)
+  st_write(shp_I_BB, ...)
+```
+
+# Grassland (Crop) filter PRE
+
+To assess the cropland defined by Preidl et al. (2020) a filtering of all grassland classes (421, 422, 423, 424, 425, 441, 451, 452, 453, 454, 459) is necessary.
+
+```{r, IACS_filter_PRE, warning = FALSE, message = FALSE, results='hide'}
+
+shp_data <- data
+
+shp_crop_PRE <- shp_data %>% 
+  filter(!I %in% c(421, 422, 423, 424, 425, 441, 451, 452, 453, 454, 459)) # grassland codes (# See table "IACS_Codes_Names" for IACS Code names)
+
+st_write(shp_crop_PRE, ...)
+
+# Calculate areas of the remaining polygons for later analyses.
+shp_crop_PRE_area <- get_polygon_area(shp_crop_PRE)  # from Functions
+area_PRE_sum <- sum(shp_crop_PRE_area$area)
+```
+
+# Grassland (Crop) filter SWD
+
+To assess the cropland defindey by Schwieder et al. (2022) a filtering of all grassland classes (250, 421, 422, 423, 424, 425, 433, 441, 451, 452, 453, 459), fodder crops (421, 422, 423, 424, 425, 433), woodland (2, 3, 4,) and Fallow land (62, 66, 65, 560, 581, 582, 594, 595, 590) and other non-agricultural areas (966, 862, 462, 990, 991, 994, 996, 998) is necessary.
+
+```{r, IACS_filter_SWD, warning = FALSE, message = FALSE, results='hide'}
+
+shp_data <- data
+
+shp_crop_SWD <- shp_data %>% 
+  filter(!I %in% c(441, 443, 451, 452, 453, 455, 459, # permanent grassland (200)
+                   421, 422, 423, 424, 425, 433, # cultivated grassland (1602)
+                   2, 3, 4,  # small woody features (3001)
+                   966, 862, 462, 990, 991, 994, 996, 998,  # Other agricultural areas (3002)
+                   62, 66, 65, 560, 581, 582, 594, 595, 590 # Fallow land (3003)
+                   ))               
+# See table "IACS_Codes_Names" for IACS Code names
+st_write(shp_crop_SWD, ...)
+
+# Shares of area
+shp_crop_SWD_area <- get_polygon_area(IACS_data) 
+area_sum_SWD <- sum(shp_crop_SWD_area$area)
+
+```
