@@ -1,0 +1,286 @@
+---
+title: "Workflow (SWD)"
+author: "Jannes Säurich (ORCID: 0009-0003-4948-128X)"
+date: "2024-12-18"
+output: pdf_document
+---
+
+# Introduction
+
+The Shannon Evenness Index (SEI) allow to derive information about the biodiversity in a landscape. 
+This script describes the workflow of calculating the based 
+on the crop type classification (CTC) from Schwieder (https://zenodo.org/records/10640528) 
+together with the IACS geometries.
+During the calculation different accuracy and data-fitness-for-purpose (DFFP) metrics get calculated.   
+
+# Packages
+This Script uses two additional R-Script with functions: 
+- "Functions_CropTypes.R" for the harmonization of crop types and 
+- "Functions_Metrics.R" for calculation of biodiversity indicators. 
+
+```{r, packages, warning = FALSE, message = FALSE}
+library(sp)
+library(sf)
+library(units)
+library(lwgeom)
+library(ggplot2)
+library(tidyverse)
+library(dplyr)
+library(exactextractr)
+library(gtools)
+library(raster)
+library(terra)
+library(Metrics)
+library(reshape)
+library(terra)
+library(raster)
+library(data.table)
+source("Functions_Metrcis.R")
+source("Functions_CropTypes.R")
+```
+
+# Import
+
+```{r, input, warning = FALSE, message = FALSE, results='hide'}
+# define working directory
+wd <- "..."
+year <- "..." # [2017, 2018, 2019]
+name <- ...
+savename <- ...
+# load data
+raster_data <- terra::rast(paste0(wd, name, ".tif"))
+```
+
+# Phase 1: Filtering and Harmonisation
+
+## Crop filtering
+Since not all crop type codes are needed for the further analysis, 
+they are categorically filtered out before. This includes:
+  - 3001 Woodland, 3002 Other agri. land, 3003 Fallow land,
+  - 3004 other land, 3011 small wood features on other land, 
+  - 200 Permanent grassland, 1602 cultivated grassland
+
+```{r, crop_filtering_V202, warning = FALSE, message = FALSE, results='hide'}
+
+maskvalues = c(3001, 3002, 3003, 3004, 3011, 200, 1602)
+raster_data_mask <- terra::mask(raster_data, mask = raster_data, maskvalues = maskvalues)
+terra::writeRaster(raster_data_mask, paste0(wd, savename, "_cropmask.tif"))
+# Export raster crop mask (without 3001, 3002, 3003, 3004, 3011, 200, 1602)
+```
+
+## Zonal Statistics
+
+With a Zonal Statistics approach (exactextractr) the raster crop type classification 
+get mapped to the IACS vector geometry. 
+The geometry receives the specific value of the crop type that occurs most frequently in the area.
+All other crop types are neglected.
+If there are no crop types within the geometry, no crop type code for the 
+polygone is defined
+(value is set as NA).
+
+```{r, data_SWD, warning = FALSE, message = FALSE, results='hide'}
+# Import IACS data after IACS_Preparation.Rmd
+IACS_data <- st_read(...)
+# CTC as raster data with crop mask (without 3001, 3002, 3003, 3004, 3011, 200, 1602)
+raster_data <- raster_data_mask
+
+# Zonal Statistic approach with majority voting
+majority <- exact_extract(raster_data, IACS_data,'majority') # majority voting
+CTC <- data.frame(majority)
+CTC_data <- bind_cols(IACS_data, CTC)
+CTC_data <- CTC_data %>% 
+  dplyr::rename(SWD = majority)
+```
+
+## Crop Type Harmonizing
+Harmonize IACS-codes to SWD-codes by "get_I4SWD_L3_codes" (see Functions_CropTypes.R)
+
+```{r, IACS-4-SWD_fruchtarten_Level3, results='hide'}
+raw_codes <- CTC_data %>% 
+  dplyr::rename(CODE = I) %>% 
+  dplyr::select(ID, CODE, SWD)
+
+codes_details <- get_I4SWD_L3_codes(raw_codes)
+# Harmonize IACS Codes to SWD codes by Mapping from Authors (see Tables and Functions_CropTypes.R)
+
+codes_details <- get_polygon_area(codes_details) # Codes with areas per polygon
+st_write(codes_details, ...) 
+# codes_details [SWD, I: all IACS-Codes, I_L3: IACS Level 3 (after harmonization)]
+```
+
+
+## Accuracy Metrics
+
+### Regional Accuracy
+**Confusions Matrix, Overall Accuracy, F1-Scores, User Accuracy, Producer Accuracy**
+Confusion matrices and accuracy metrics are used to assess the accuracy of the
+crop classification in comparison to IACS. 
+The calculation for this follows the guidance of Bleik et al. (2016).
+The confusion matrix maps the number of classified geometries of the predicted 
+(column) versus the actual classes (row). 
+Correctly classified classes are therefore represented along the diagonal. 
+All other cells next to the diagonal represent the different possible errors. 
+This representation gives overview of the classification accuracy of the whole model (overall accuracy),
+but also of the individual classes (F1, W-F1, M-F1, UA, PA).
+
+```{r, accmetrcis}
+AccMetrics_L3 <- get_AccMetrics(actual = codes_details$I_L3, 
+                                predicted = codes_details$SWD, cm = NULL)
+write.csv(AccMetrics_L3$ConfusionMatrix, paste0(savename, "_CM.csv"))
+# Confusions Matrix as .csv
+write.csv(AccMetrics_L3$AccMetrics, paste0(savename, "_AC.csv"))
+# Accuracy Metrics as .csv
+```
+
+### Local Accuracy Metrics
+**Uncertainty / Probability (Field scale)**
+The field probability (P) represents whether the crop type of a field matches 
+the IACS and crop type classification. 
+- P is set as 1 if the crop types are identical
+- If not, P is set as 0. 
+
+```{r, probability_field}
+  data_probability_raw <- codes_details %>% 
+    mutate(code_difference = I_L3 - SWD)
+  
+  # If the crop type classes are identical P is set to 1
+  data_probability_1 <- data_probability_raw %>% 
+    filter(code_difference == 0 ) %>% 
+    mutate(probability = 1)
+  
+  data_probability_NA <- data_probability_raw %>% 
+    filter(is.na(code_difference)) %>% 
+    mutate(probability = NA) # =0 oder =NA
+  
+  # if they differ P is set to 0
+  data_probability_0 <- data_probability_raw %>% 
+    filter(! is.na(code_difference) & code_difference != 0) %>% 
+    mutate(probability = 0)
+  
+  data_probability <- rbind(data_probability_0, data_probability_1, data_probability_NA)
+  
+  data_probability <- data_probability %>% 
+    dplyr::select(ID, I, SWD, I_L3, area, prob_F = probability)
+  
+  st_write(data_probability, paste0(savename, "_probability_field.shp"), delete_dsn = T)
+```
+
+### Regional Accuracy Metric
+**Uncertainty / Probability (Hexagon scale)**
+The field probability (P) is summarized per hexagon (P_HX) as weighted mean. 
+For this, the data get intersected with the hexagon geometry.
+
+```{r, intersection_I, results='hide'}
+hexagon_data <- st_read(...) # Load heyagon geometries
+intersected <- st_intersection(data_probability, hexagon_data) 
+intersected_details <- intersected %>% 
+  dplyr::select(ID, I, I_L3, SWD, HexagonID, prob_F)
+
+polygon_details <- get_polygon_area(intersected_details) # from Functions_Metrics.R
+polygon_details_raw <- drop_units(polygon_details)
+
+  probability_output <- st_drop_geometry(polygon_details_raw) %>% 
+    dplyr::select(HexagonID, area, prob_F) %>% 
+    group_by(HexagonID) %>% 
+    dplyr::filter(!is.na(area)) %>% 
+    dplyr::filter(!is.na(prob_F)) %>% 
+    mutate(total_hex_sum = sum(area)) %>% 
+    mutate(weight = (area/total_hex_sum)) %>% 
+    dplyr::summarise(prob_H = weighted.mean(prob_F, weight))
+  
+  prob_H_data <- left_join(x= hexagon_data, y=probability_output)
+  prob_H_data <- data.frame(HexagonID = prob_H_data$HexagonID, 
+                            prob_H = prob_H_data$prob_H)
+  st_write(prob_H_data, ...)
+```
+
+
+# Phase 2: Calculation of Biodiversity Metrics
+As indicator for the biodiversity of crop types the Shannon Evenness Index (SEI) is calculated.
+
+## Calculation of SEI
+For a later comparison, the SEI is calculated for both input data sets (IACS (I) and CTC (SWD)).
+
+### SEI (SWD)
+```{r, metrics_SWD, warning = FALSE, message = FALSE, results='hide'}
+raw_polygon_details <- data.frame(HexagonID = polygon_details$HexagonID,
+                                  code= polygon_details$SWD,
+                                  area= polygon_details$area)
+short <- "SWD" # [I, SWD]
+
+## Shannon Evenness Index (SEI)
+evenness_data_SWD <- get_evenness_per_hexagon(hexagon_data, raw_polygon_details)
+raw_evenness_data_SWD <- evenness_data_SWD %>%
+    dplyr::rename(evenness_SWD = E, shannon_SWD = H) 
+st_write(evenness_data_SWD, ...)
+```
+
+### SEI (I)
+```{r, metrics_I, warning = FALSE, message = FALSE, results='hide'}
+raw_polygon_details <- data.frame(HexagonID = polygon_details$HexagonID,
+                                  code= polygon_details$I_L3, # choose [I_L3, SWD]
+                                  area= polygon_details$area)
+short <- "I" # [I, SWD]
+
+## Shannon Evenness Index (SEI)
+evenness_data_I <- get_evenness_per_hexagon(hexagon_data, raw_polygon_details) # see Functions_Metrics.R
+evenness_data_I <- st_drop_geometry(evenness_data_I) %>%
+    dplyr::rename(evenness_I = E) 
+st_write(evenness_data_I, ...)
+```
+
+# DFFP Assessment
+For the data fitness for purpose assessment different metrics (difference,
+mean, standard deviation, R², RMSE, ks-Test) get derived based on the calculated SEI values. 
+
+## SEI Difference (IACS-CTC)
+```{r, difference, warning = FALSE, message = FALSE}
+evenness_difference <- left_join(raw_evenness_data_SWD, raw_evenness_data_I) %>% 
+  dplyr::select(HexagonID, evenness_I, evenness_SWD) %>% 
+  dplyr::mutate(difference = evenness_I - evenness_SWD)
+evenness_difference_prob <- left_join(evenness_difference, prob_H_data)
+# combination with results of probability 
+st_write(evenness_difference_prob, ...)
+```
+
+## Summarising Metrics
+```{r, summarizing metrics}
+data <- data %>% # values as numbers
+  mutate(value_1 = as.numeric(evenness_data_SWD$evenness_SWD)) %>% 
+  mutate(value_2 = as.numeric(evenness_data_I$evenness_I)) %>% 
+  mutate(difference = as.numeric(difference))
+
+  ## Statistics
+  mean_IACS <- mean(na.omit(as.numeric(data$value_2)))
+  sd_IACS <- sd(na.omit(as.numeric(data$value_2)))
+  mean_CTC <- mean(na.omit(as.numeric(data$value_1)))
+  sd_CTC <- sd(na.omit(as.numeric(data$value_1)))  
+  
+  ## KS-test
+  data_ks <- ks.test(data$value_2, data$value_1)
+  # print(paste0("D: ", round(data_ks$statistic, 2)))
+  # print(paste0("p: ", round(data_ks$p.value, 2)))
+  
+  ## Linear model, R² und RMSE
+  data_model <- lm(value_2 ~ value_1, data = data)
+  data_r_squared <- summary(data_model)$r.squared
+  data_rmse <- sqrt(mean(data_model$residuals^2))
+  # print(paste0("R²: ", round(data_r_squared, 2)))
+  # print(paste0("RMSE: ", round(data_rmse, 2)))
+
+  df <- data.frame(
+            "FS" = FS, 
+            "year" = year, 
+            "CTC" = SWD,
+            "n" = n,
+            "mean IACS" = mean_IACS,
+            "mean CTC "= mean_CTC, 
+            "sd IACS" = sd_IACS,
+            "sd CTC" = sd_CTC, # sd ", CTC_name, "= "
+            "R²" = data_r_squared, 
+            "RMSE" = data_rmse, 
+            "p-value (ks)" = data_ks$p.value,
+            "D (ks)" = data_ks$statistic)
+
+  table <- rbind(table, df)
+```
