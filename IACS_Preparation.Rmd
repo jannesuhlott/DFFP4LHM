@@ -79,7 +79,8 @@ st_write(shp_data, ...)
 ```
 
 ## Multiple Geometries Check
-Moreover, a check for double geometries which lay above each other can help to avoid inaccuracies in later calculations.
+Moreover, a check for double geometries which lay above each other can help 
+to avoid inaccuracies in later calculations.
 For this, the number k (number of duplicate geometries) is calculated.
 Polygons whose geometry is identical, i.e. which overlap, count.
 
@@ -122,7 +123,8 @@ To assess the cropland defined by Preidl et al. (2020) a filtering of all grassl
 ```{r, IACS_filter_PRE, warning = FALSE, message = FALSE, results='hide'}
 shp_data <- data
 shp_crop_PRE <- shp_data %>% 
-  filter(!I %in% c(421, 422, 423, 424, 425, 441, 451, 452, 453, 454, 459)) # grassland codes (# See table "IACS_Codes_Names" for IACS Code names)
+  filter(!I %in% c(421, 422, 423, 424, 425, 441, 451, 452, 453, 454, 459)) 
+  # grassland codes (# See table "IACS_Codes_Names" for IACS Code names)
 
 st_write(shp_crop_PRE, ...)
 
@@ -132,7 +134,13 @@ area_PRE_sum <- sum(shp_crop_PRE_area$area)
 ```
 
 # Grassland (Crop) filter SWD
-To assess the cropland defindey by Schwieder et al. (2022) a filtering of all grassland classes (250, 421, 422, 423, 424, 425, 433, 441, 451, 452, 453, 459), fodder crops (421, 422, 423, 424, 425, 433), woodland (2, 3, 4,) and Fallow land (62, 66, 65, 560, 581, 582, 594, 595, 590) and other non-agricultural areas (966, 862, 462, 990, 991, 994, 996, 998) is necessary.
+To assess the cropland defindey by Schwieder et al. (2022) a filtering of:
+  grassland classes (250, 421, 422, 423, 424, 425, 433, 441, 451, 452, 453, 459), 
+  fodder crops (421, 422, 423, 424, 425, 433), 
+  woodland (2, 3, 4,)
+  Fallow land (62, 66, 65, 560, 581, 582, 594, 595, 590) and 
+  other non-agricultural areas (966, 862, 462, 990, 991, 994, 996, 998) 
+is necessary.
 
 ```{r, IACS_filter_SWD, warning = FALSE, message = FALSE, results='hide'}
 shp_data <- data
