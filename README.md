@@ -1,5 +1,5 @@
 # DFFU Biodiversity
-[Jannes Säurich](ORCID: https://orcid.org/0009-0003-4948-128X)
+[Jannes Säurich](https://orcid.org/0009-0003-4948-128X)
 
 ## Introduction
 The code published here was developed for an exemplary assessment of data fitness for purpose in the context of biodiversity metrics.
