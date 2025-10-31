@@ -55,7 +55,8 @@ shp_data <- st_read(paste0(wd, name))
 shp_buffer <- st_buffer(shp_data, 0)
 shp_data <- shp_buffer
 
-# Create a unique ID for each polygon by combining relevant fields (e.g., FLIK + plot number). Different approaches are used depending on the state cause of data structures. 
+# Create a unique ID for each polygon by combining relevant fields (e.g., FLIK + plot number).
+# Different approaches are used depending on the state cause of data structures. 
 
 # for LS
 shp_HNF <- shp_data %>% 
@@ -115,7 +116,8 @@ the data set is adjusted to the federal state border.
 ```
 
 # Grassland (Crop) filter PRE
-To assess the cropland defined by Preidl et al. (2020) a filtering of all grassland classes (421, 422, 423, 424, 425, 441, 451, 452, 453, 454, 459) is necessary.
+To assess the cropland defined by Preidl et al. (2020) a filtering of all grassland classes 
+(421, 422, 423, 424, 425, 441, 451, 452, 453, 454, 459) is necessary.
 
 ```{r, IACS_filter_PRE, warning = FALSE, message = FALSE, results='hide'}
 shp_data <- data
