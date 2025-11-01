@@ -75,8 +75,7 @@ get mapped to the IACS vector geometry.
 The geometry receives the specific value of the crop type that occurs most frequently in the area.
 All other crop types are neglected.
 If there are no crop types within the geometry, no crop type code for the 
-polygone is defined
-(value is set as NA).
+polygone is defined (value is set as NA).
 
 ```{r, data_SWD, warning = FALSE, message = FALSE, results='hide'}
 # Import IACS data after IACS_Preparation.Rmd
@@ -162,7 +161,7 @@ the IACS and crop type classification.
   data_probability <- data_probability %>% 
     dplyr::select(ID, I, SWD, I_L3, area, prob_F = probability)
   
-  st_write(data_probability, paste0(savename, "_probability_field.shp"), delete_dsn = T)
+  st_write(data_probability, ...)
 ```
 
 ### Regional Accuracy Metric
@@ -171,7 +170,7 @@ The field probability (P) is summarized per hexagon (P_HX) as weighted mean.
 For this, the data get intersected with the hexagon geometry.
 
 ```{r, intersection_I, results='hide'}
-hexagon_data <- st_read(...) # Load heyagon geometries
+hexagon_data <- st_read(...) # Load hexagon geometries
 intersected <- st_intersection(data_probability, hexagon_data) 
 intersected_details <- intersected %>% 
   dplyr::select(ID, I, I_L3, SWD, HexagonID, prob_F)
@@ -201,19 +200,17 @@ As indicator for the biodiversity of crop types the Shannon Evenness Index (SEI)
 ## Calculation of SEI
 For a later comparison, the SEI is calculated for both input data sets (IACS (I) and CTC (SWD)).
 
-### SEI (SWD)
+### Shannon Evenness Index (SEI) (SWD)
 ```{r, metrics_SWD, warning = FALSE, message = FALSE, results='hide'}
 raw_polygon_details <- data.frame(HexagonID = polygon_details$HexagonID,
                                   code= polygon_details$SWD,
                                   area= polygon_details$area)
 short <- "SWD" # [I, SWD]
 
-## Shannon Evenness Index (SEI)
 evenness_data_SWD <- get_evenness_per_hexagon(hexagon_data, raw_polygon_details)
 raw_evenness_data_SWD <- evenness_data_SWD %>%
     dplyr::rename(evenness_SWD = E, shannon_SWD = H) 
 st_write(evenness_data_SWD, ...)
-```
 
 ### SEI (I)
 ```{r, metrics_I, warning = FALSE, message = FALSE, results='hide'}
@@ -222,7 +219,6 @@ raw_polygon_details <- data.frame(HexagonID = polygon_details$HexagonID,
                                   area= polygon_details$area)
 short <- "I" # [I, SWD]
 
-## Shannon Evenness Index (SEI)
 evenness_data_I <- get_evenness_per_hexagon(hexagon_data, raw_polygon_details) # see Functions_Metrics.R
 evenness_data_I <- st_drop_geometry(evenness_data_I) %>%
     dplyr::rename(evenness_I = E) 
