@@ -17,7 +17,14 @@ During the calculation different accuracy and data-fitness-for-purpose (DFFP) me
 This Script uses two additional R-Script with functions: 
 - "Functions_CropTypes.R" for the harmonization of crop types and 
 - "Functions_Metrics.R" for calculation of biodiversity indicators. 
-
+This Script uses the following packages: 
+- sp, sf, lwgeom – spatial data handling and analysis
+- units – management of physical units
+- raster, terra – raster data processing
+- exactextractr – efficient extraction of raster values
+- ggplot2, tidyverse, dplyr, reshape – data manipulation and visualization
+- Metrics – model evaluation and error metrics
+- gtools – general utility functions
 ```{r, packages, warning = FALSE, message = FALSE}
 library(sp)
 library(sf)
