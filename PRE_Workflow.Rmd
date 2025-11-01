@@ -14,9 +14,17 @@ together with the IACS geometries.
 During the calculation different accuracy and data-fitness-for-purpose (DFFP) metrics get calculated.   
 
 # Packages
-This Script uses two additional R-Script with functions: "Functions_CropTypes.R" for the harmonization of crop types and "Functions_Metrics.R" for calculation of biodiversity indicators. 
-
-# Packages
+This Script uses two additional R-Script with functions:
+- "Functions_CropTypes.R" for the harmonization of crop types
+- "Functions_Metrics.R" for calculation of biodiversity indicators. 
+This Script uses the following packages: 
+- sp, sf, lwgeom – spatial data handling and analysis
+- units – management of physical units
+- raster, terra – raster data processing
+- exactextractr – efficient extraction of raster values
+- ggplot2, tidyverse, dplyr, reshape – data manipulation and visualization
+- Metrics – model evaluation and error metrics
+- gtools – general utility functions
 
 ```{r, packages, warning = FALSE, message = FALSE}
 library(sp)
@@ -37,7 +45,6 @@ source("~/MonViA_Indikatoren/JU_MonViA/Skripte/Vektor/Functions_CropTypes.R")
 ```
 
 # Import
-
 ```{r, input, warning = FALSE, message = FALSE, results='hide'}
 # define working directory
 wd <- ...
@@ -185,7 +192,6 @@ polygon_details_raw <- drop_units(polygon_details)
   st_write(prob_H_data, ...)
 ```
 
-
 # Phase 2: Calculation of Biodiversity Metrics
 As indicator for the biodiversity of crop types the Shannon Evenness Index (SEI) is calculated.
 
@@ -194,7 +200,6 @@ For a later comparison, the SEI is calculated for both input data sets (IACS (I)
 
 ### SEI (PRE)
 ```{r, metrics_PRE, warning = FALSE, message = FALSE, results='hide'}
-
 raw_polygon_details <- data.frame(
               HexagonID = polygon_details$HexagonID,
               code= polygon_details$PRE,
