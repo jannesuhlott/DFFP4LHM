@@ -65,7 +65,7 @@ This script covers the derivation of the Shannon Evenness Index from the data of
 This script covers the derivation of the Shannon Evenness Index from the data of [Preid et. al (2020)](https://www.sciencedirect.com/science/article/pii/S0034425720300420?via%3Dihub) and the IACS data. During the calculation, the metrics from phases 1 and 2 are derived. 
 
 ### Function_Metrics.R
-Function script which contains: 
+Function script for landscape heterogeneity metric calculation, which contains: 
 - get_polygon_area
 - get_evenness_per_hexagon
 - get_hexagon_filtered
@@ -73,6 +73,8 @@ Function script which contains:
 - plot theme
 
 ### Functions_CropTypes.R
- 
+Function script for aggregation of crop types, which contains: 
+- get_I4PRE_L3_codes
+- get_I4PRE_L3_codes
  
 ## License
