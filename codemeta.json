@@ -1,0 +1,29 @@
+{
+    "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+    "type": "SoftwareSourceCode",
+    "applicationCategory": "Geodata",
+    "author": [
+        {
+            "id": "https://orcid.org/0009-0003-4948-128X",
+            "type": "Person",
+            "email": "jannes.saeurich@thuenen.de",
+            "familyName": "Säurich",
+            "givenName": "Jannes"
+        }
+    ],
+    "codeRepository": "https://github.com/jannesuhlott/DFFU_Biodiversity",
+    "dateCreated": "2025-11-02",
+    "dateModified": "2025-11-02",
+    "description": "R Scripts for Data-Fitness-for-Purpose (DFFP) assessment during calculation of biodiversity metrics.",
+    "funder": {
+        "type": "Organization",
+        "name": "Julius Kühn-Institut"
+    },
+    "keywords": [
+        "Biodiversity",
+        "Data-fitness-for-purpose"
+    ],
+    "license": "https://spdx.org/licenses/Apache-2.0",
+    "name": "DFFU_Biodiversity",
+    "programmingLanguage": "R"
+}
