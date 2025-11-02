@@ -1,15 +1,15 @@
 # DFFU Biodiversity
-Jannes Säurich (ORCID: 0009-0003-4948-128X)
+Jannes Säurich ([ORCID: 0009-0003-4948-128X](https://orcid.org/0009-0003-4948-128X))
 R Scripts for Data-Fitness-for-Purpose (DFFP) assessment during calculation of biodiversity metrics. 
 
 # Repository Content
 Workflows:
 - [SWD_Workflow.Rmd](SWD_Workflow.Rmd) -> Workflow for calculation based on [Schwieder et. al (2022)](https://zenodo.org/records/10645427) (SWD) 
-- [PRE-Workflow.Rmd](PRE-Workflow.Rmd) -> Workflow for calculation based on [Preid et. al (2020)](https://www.sciencedirect.com/science/article/pii/S0034425720300420? via%3Dihub) (PRE)
+- [PRE-Workflow.Rmd](PRE-Workflow.Rmd) -> Workflow for calculation based on [Preidl et. al (2020)](https://www.sciencedirect.com/science/article/pii/S0034425720300420?via%3Dihub) (PRE)
 - [IACS_Preparation.Rmd](IACS_Preparation.Rmd) -> Workflow for preparation of IACS Data
 
 Functions: 
-- [Functions_Metrcis.R] (Functions_Metrcis.R) -> Functions needed for metrcis calculation
+- [Functions_Metrics.R](Functions_Metrics.R) -> Functions needed for metrcis calculation
 - [Functions_CropTypes.R](Functions_CropTypes.R) -> Functions for Crop Type aggregation
 
 ## Introduction
