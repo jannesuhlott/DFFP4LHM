@@ -4,9 +4,9 @@ R Scripts for Data-Fitness-for-Purpose (DFFP) assessment during calculation of b
 
 # Repository Content
 Workflows:
-- [SWD_Workflow.Rmd](SWD_Workflow.Rmd) -> Workflow for calculation based on [Schwieder et. al (2022)](https://zenodo.org/records/10645427) (SWD) 
-- [PRE_Workflow.Rmd](PRE_Workflow.Rmd) -> Workflow for calculation based on [Preidl et. al (2020)](https://www.sciencedirect.com/science/article/pii/S0034425720300420?via%3Dihub) (PRE)
-- [IACS_Preparation.Rmd](IACS_Preparation.Rmd) -> Workflow for preparation of IACS Data
+- [SWD_Workflow.Rmd](/Workflows/SWD_Workflow.Rmd) -> Workflow for calculation based on [Schwieder et. al (2022)](https://zenodo.org/records/10645427) (SWD) 
+- [PRE_Workflow.Rmd](/Workflows/PRE_Workflow.Rmd) -> Workflow for calculation based on [Preidl et. al (2020)](https://www.sciencedirect.com/science/article/pii/S0034425720300420?via%3Dihub) (PRE)
+- [IACS_Preparation.Rmd](/Workflows/IACS_Preparation.Rmd) -> Workflow for preparation of IACS Data
 
 Functions: 
 - [Functions_Metrics.R](Functions_Metrics.R) -> Functions needed for metrcis calculation
