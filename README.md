@@ -9,8 +9,8 @@ Workflows:
 - [IACS_Preparation.Rmd](/Workflows/IACS_Preparation.Rmd) -> Workflow for preparation of IACS Data
 
 Functions: 
-- [Functions_Metrics.R](Functions_Metrics.R) -> Functions needed for metrcis calculation
-- [Functions_CropTypes.R](Functions_CropTypes.R) -> Functions for Crop Type aggregation
+- [Functions_Metrics.R](/Functions/Functions_Metrics.R) -> Functions needed for metrcis calculation
+- [Functions_CropTypes.R](/Functions/Functions_CropTypes.R) -> Functions for Crop Type aggregation
 
 ## Introduction
 The code published here was developed for an exemplary assessment of data fitness for purpose in the context of biodiversity metrics.
