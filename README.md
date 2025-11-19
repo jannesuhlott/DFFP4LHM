@@ -1,5 +1,6 @@
 # DFFU Biodiversity
-Jannes Säurich ([ORCID: 0009-0003-4948-128X](https://orcid.org/0009-0003-4948-128X))
+Author: Jannes Säurich ([ORCID: 0009-0003-4948-128X](https://orcid.org/0009-0003-4948-128X))
+
 R Scripts for Data-Fitness-for-Purpose (DFFP) assessment during calculation of biodiversity metrics. 
 
 # Repository Content
