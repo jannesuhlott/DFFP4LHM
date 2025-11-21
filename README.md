@@ -88,6 +88,8 @@ Function script for landscape heterogeneity metric calculation, which contains:
 Function script for aggregation of crop types, which contains: 
 - get_I4PRE_L3_codes
 - get_I4PRE_L3_codes
- 
-## License
+
+## Data
+tbd 
+# License
 This project is licensed under the Apache 2.0 License - see the [LICENSE](LICENSE) file for details.
