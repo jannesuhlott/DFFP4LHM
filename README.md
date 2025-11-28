@@ -1,4 +1,9 @@
 # DFFP4LHM
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17753964.svg)](([https://doi.org/10.5281/zenodo.17753964]))
+[![License](https://img.shields.io/badge/License-Apache2.0-yellow.svg)](LICENSE)
+[![R](https://img.shields.io/badge/R->=4.0.0-blue.svg)](https://www.r-project.org/)
+[![Status](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+
 Author: Jannes Säurich ([ORCID: 0009-0003-4948-128X](https://orcid.org/0009-0003-4948-128X))
 
 ## Overview
@@ -93,6 +98,9 @@ Function script for landscape heterogeneity metric calculation, which contains:
 Function script for aggregation of crop types, which contains: 
 - get_I4PRE_L3_codes
 - get_I4PRE_L3_codes
+
+## Data
+Data are published [here](https://doi.org/10.5281/zenodo.17752848) 
 
 # Contact
 *   **Julius Kühn-Institut (JKI)** - *Geodata Management (GDM)*
