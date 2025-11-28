@@ -68,20 +68,20 @@ During the process multiple accuracy metrics were calculated.
 
 ## Roadmap
 
-### [IACS_Preparation.Rmd](/Workflows/IACS_Preparation.Rmd)
+### [IACS_Preparation.Rmd](/R/Workflows/IACS_Preparation.Rmd)
 
 This script performs the preprocessing of IACS (Integrated Administration and Control System) data for federal-state-level agricultural analyses. It includes geometry correction, unique ID creation, and removal of overlapping polygons. The data are cropped to federal-state boundaries and filtered to retain relevant land-use types, excluding specific grassland, fodder, woodland, fallow, and other non-crop areas. The workflow produces cleaned Shapefiles for each state and year, with calculated polygon areas, facilitating accurate spatial analyses of cropland distribution.
 SWD_Codes_Mapping: Contains the mapping of IACS Codes to the defined crop types from [Schwieder et. al (2022)](https://zenodo.org/records/10645427)
 PRE_Code_Mapping: Contains the mapping of IACS Codes to the defined crop types from [Preid et. al (2020)](https://www.sciencedirect.com/science/article/pii/S0034425720300420?via%3Dihub)
 IACS_Codes_Names: Contains the names of all used IACS Codes.
 
-### [SWD_Workflow.Rmd](/Workflows/SWD_Workflow.Rmd)
+### [SWD_Workflow.Rmd](/R/Workflows/SWD_Workflow.Rmd)
 This script covers the derivation of the Shannon Evenness Index from the data of [Schwieder et. al (2022)](https://zenodo.org/records/10645427) and the IACS data. During the calculation, the metrics from phases 1 and 2 are derived. 
 
-### [PRE_Workflow.Rmd](/Workflows/PRE_Workflow.Rmd)
+### [PRE_Workflow.Rmd](/R/Workflows/PRE_Workflow.Rmd)
 This script covers the derivation of the Shannon Evenness Index from the data of [Preid et. al (2020)](https://www.sciencedirect.com/science/article/pii/S0034425720300420?via%3Dihub) and the IACS data. During the calculation, the metrics from phases 1 and 2 are derived. 
 
-### [Functions_Metrics.R](/Functions/Functions_Metrics.R)
+### [Functions_Metrics.R](/R/Functions/Functions_Metrics.R)
 Function script for landscape heterogeneity metric calculation, which contains: 
 - get_polygon_area
 - get_evenness_per_hexagon
@@ -89,7 +89,7 @@ Function script for landscape heterogeneity metric calculation, which contains:
 - get_AccMetrics
 - plot theme
 
-### [Functions_CropTypes.R](/Functions/Functions_CropTypes.R)
+### [Functions_CropTypes.R](/R/Functions/Functions_CropTypes.R)
 Function script for aggregation of crop types, which contains: 
 - get_I4PRE_L3_codes
 - get_I4PRE_L3_codes
