@@ -1,17 +1,30 @@
-# DFFU Biodiversity
+# DFFP4LHM
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.XXXXXX.svg)](https://doi.org/10.5281/zenodo.XXXXXX)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![R](https://img.shields.io/badge/R->=4.0.0-blue.svg)](https://www.r-project.org/)
+[![Status](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+
 Author: Jannes Säurich ([ORCID: 0009-0003-4948-128X](https://orcid.org/0009-0003-4948-128X))
 
-R Scripts for Data-Fitness-for-Purpose (DFFP) assessment during calculation of biodiversity metrics. 
+## Overview
+**DFFP4LHM** provides a collection of R scripts for calculating **Land Use Heterogeneity (LHM) metrics** while explicitly incorporating **Data-Fitness-for-Purpose (DFFP)** principles. 
 
-# Repository Content
-Workflows:
-- [SWD_Workflow.Rmd](/Workflows/SWD_Workflow.Rmd) -> Workflow for calculation based on [Schwieder et. al (2022)](https://zenodo.org/records/10645427) (SWD) 
-- [PRE_Workflow.Rmd](/Workflows/PRE_Workflow.Rmd) -> Workflow for calculation based on [Preidl et. al (2020)](https://www.sciencedirect.com/science/article/pii/S0034425720300420?via%3Dihub) (PRE)
-- [IACS_Preparation.Rmd](/Workflows/IACS_Preparation.Rmd) -> Workflow for preparation of IACS Data
+This tool addresses the challenge of spatial data quality in agrosystems research by allowing users to not only compute landscape metrics (e.g., Shannon Index, Edge Density) but also evaluate whether the input spatial data meets the necessary quality standards for their specific analytical purpose.
 
-Functions: 
-- [Functions_Metrics.R](/Functions/Functions_Metrics.R) -> Functions needed for metrcis calculation
-- [Functions_CropTypes.R](/Functions/Functions_CropTypes.R) -> Functions for Crop Type aggregation
+## Installation & Requirements
+To ensure **Accessibility** and **Reusability**, please follow these setup steps.
+### Prerequisites
+*   **R** (Version 4.0.0 or higher)
+*   **RStudio** (Recommended)
+
+# Repository Structure
+
+*   `R/`: Source code for workflows and fuctions for metric calculation and quality checks.
+*   `Data/`: Example datasets for testing (ensure no sensitive data is uploaded).
+*   `Tables/`: Tables with background infos for quality assessment. 
+*   `codemeta.json`: Machine-readable metadata (Schema.org/CodeMeta compliant).
+*   `CITATION.cff`: Citation information.
 
 ## Introduction
 The code published here was developed for an exemplary assessment of data fitness for purpose in the context of biodiversity metrics.
@@ -61,22 +74,21 @@ During the process multiple accuracy metrics were calculated.
 
 
 ## Roadmap
-The repository contains several files: 
 
-### IACS Preparation
+### [IACS_Preparation.Rmd](/Workflows/IACS_Preparation.Rmd)
 
 This script performs the preprocessing of IACS (Integrated Administration and Control System) data for federal-state-level agricultural analyses. It includes geometry correction, unique ID creation, and removal of overlapping polygons. The data are cropped to federal-state boundaries and filtered to retain relevant land-use types, excluding specific grassland, fodder, woodland, fallow, and other non-crop areas. The workflow produces cleaned Shapefiles for each state and year, with calculated polygon areas, facilitating accurate spatial analyses of cropland distribution.
 SWD_Codes_Mapping: Contains the mapping of IACS Codes to the defined crop types from [Schwieder et. al (2022)](https://zenodo.org/records/10645427)
 PRE_Code_Mapping: Contains the mapping of IACS Codes to the defined crop types from [Preid et. al (2020)](https://www.sciencedirect.com/science/article/pii/S0034425720300420?via%3Dihub)
 IACS_Codes_Names: Contains the names of all used IACS Codes.
 
-### SWD Workflow
+### [SWD_Workflow.Rmd](/Workflows/SWD_Workflow.Rmd)
 This script covers the derivation of the Shannon Evenness Index from the data of [Schwieder et. al (2022)](https://zenodo.org/records/10645427) and the IACS data. During the calculation, the metrics from phases 1 and 2 are derived. 
 
-### PRE Workflow
+### [PRE_Workflow.Rmd](/Workflows/PRE_Workflow.Rmd)
 This script covers the derivation of the Shannon Evenness Index from the data of [Preid et. al (2020)](https://www.sciencedirect.com/science/article/pii/S0034425720300420?via%3Dihub) and the IACS data. During the calculation, the metrics from phases 1 and 2 are derived. 
 
-### Function_Metrics.R
+### [Functions_Metrics.R](/Functions/Functions_Metrics.R)
 Function script for landscape heterogeneity metric calculation, which contains: 
 - get_polygon_area
 - get_evenness_per_hexagon
@@ -84,12 +96,22 @@ Function script for landscape heterogeneity metric calculation, which contains:
 - get_AccMetrics
 - plot theme
 
-### Functions_CropTypes.R
+### [Functions_CropTypes.R](/Functions/Functions_CropTypes.R)
 Function script for aggregation of crop types, which contains: 
 - get_I4PRE_L3_codes
 - get_I4PRE_L3_codes
 
-## Data
-tbd 
+# Contact
+*   **Julius Kühn-Institut (JKI)** - *Geodata Management (GDM)*
+*   Email: [Markus Möller](markus.moeller@julius-kuehn.de)
+*   Website: [https://www.julius-kuehn.de/](https://www.julius-kuehn.de/)
+
+# Citation
+To support **Findability** and credit the authors, please [cite](CITATION.cff) this software if you use it in your research. 
+
 # License
 This project is licensed under the Apache 2.0 License - see the [LICENSE](LICENSE) file for details.
+
+# Funding & Support:
+*   Developed within the context of **FAIRagro** (NFDI).
+*   Aligned with the Roadmap *"Publishing research code FAIR"* (DOI: 10.5281/zenodo.14772748).
