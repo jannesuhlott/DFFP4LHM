@@ -1,10 +1,4 @@
 # DFFP4LHM
-
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.XXXXXX.svg)](https://doi.org/10.5281/zenodo.XXXXXX)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![R](https://img.shields.io/badge/R->=4.0.0-blue.svg)](https://www.r-project.org/)
-[![Status](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-
 Author: Jannes Säurich ([ORCID: 0009-0003-4948-128X](https://orcid.org/0009-0003-4948-128X))
 
 ## Overview
