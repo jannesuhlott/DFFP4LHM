@@ -1,29 +1,69 @@
 {
-    "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
-    "type": "SoftwareSourceCode",
-    "applicationCategory": "Geodata",
-    "author": [
-        {
-            "id": "https://orcid.org/0009-0003-4948-128X",
-            "type": "Person",
-            "email": "jannes.saeurich@thuenen.de",
-            "familyName": "Säurich",
-            "givenName": "Jannes"
-        }
-    ],
-    "codeRepository": "https://github.com/jannesuhlott/DFFU_Biodiversity",
-    "dateCreated": "2025-11-02",
-    "dateModified": "2025-11-02",
-    "description": "R Scripts for Data-Fitness-for-Purpose (DFFP) assessment during calculation of biodiversity metrics.",
-    "funder": {
-        "type": "Organization",
-        "name": "Julius Kühn-Institut"
-    },
-    "keywords": [
-        "Biodiversity",
-        "Data-fitness-for-purpose"
-    ],
-    "license": "https://spdx.org/licenses/Apache-2.0",
-    "name": "DFFU_Biodiversity",
-    "programmingLanguage": "R"
+  "@context": "https://w3id.org/codemeta/3.0",
+  "@type": "SoftwareSourceCode",
+  "name": "DFFP4LHM",
+  "description": "R Scripts for the calculation of Land Use Heterogeneity (LHM) metrics considering Data-Fitness-for-Purpose (DFFP) principles. This software package provides tools for analyzing spatial heterogeneity in agricultural landscapes while assessing data quality and fitness-for-use criteria.",
+  "codeRepository": "https://github.com/jannesuhlott/DFFP4LHM/",
+  "author": [
+    {
+      "@type": "Person",
+      "givenName": "Jannes",
+      "familyName": "Uhlott",
+      "email": "jannes.uhlott@julius-kuehn.de",
+      "@id": "[https://orcid.org/0009-0003-4948-128X]",
+      "affiliation": {
+        "@type": "Organization",
+        "name": "Julius Kühn-Institut (JKI)",
+        "@id": "https://ror.org/022d5qt08"
+      }
+    }
+  ],
+  "keywords": [
+    "land use heterogeneity",
+    "LHM metrics",
+    "data fitness for purpose",
+    "DFFP",
+    "spatial analysis",
+    "agricultural landscapes",
+    "landscape metrics",
+    "data quality assessment",
+    "R scripts",
+    "geospatial analysis",
+    "agrosystems research"
+  ],
+  "programmingLanguage": {
+    "@type": "ComputerLanguage",
+    "name": "R",
+    "url": "https://www.r-project.org/"
+  },
+  "license": "Apache-2.0",
+  "version": "1.0.0",
+  "dateCreated": "2025-11-01",
+  "dateModified": "2025-11-28",
+  "datePublished": "2025-11-28",
+  "softwareRequirements": [
+    "R (>= 4.0.0)",
+    "terra (>= 1.6.0)",
+    "sf (>= 1.0.0)",
+    "[Additional R package dependencies]"
+  ],
+  "runtimePlatform": "R",
+  "operatingSystem": "Windows", "Linux",
+  "maintainer": {
+    "@type": "Person",
+    "givenName": "Jannes",
+    "familyName": "Uhlott",
+    "email": "jannes.uhlott@julius-kuehn.de"
+  },
+  "developmentStatus": "active",
+  "issueTracker": "https://github.com/jannesuhlott/DFFP4LHM/issues",
+  "readme": "https://github.com/jannesuhlott/DFFP4LHM/blob/main/README.md",
+  "applicationCategory": "Scientific Software",
+  "applicationSubCategory": ["Geospatial Analysis", "Agricultural Research", "Data Quality Assessment"],
+  "provider": {
+    "@type": "Organization",
+    "name": "Julius Kühn-Institut (JKI) - Geodata Management",
+    "url": "https://www.julius-kuehn.de/",
+    "@id": "https://ror.org/022d5qt08"
+  }
 }
