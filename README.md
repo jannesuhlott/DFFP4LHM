@@ -6,8 +6,7 @@ Author: Jannes Säurich ([ORCID: 0009-0003-4948-128X](https://orcid.org/0009-000
 
 This tool addresses the challenge of spatial data quality in agrosystems research by allowing users to not only compute landscape metrics (e.g., Shannon Index, Edge Density) but also evaluate whether the input spatial data meets the necessary quality standards for their specific analytical purpose.
 
-## Installation & Requirements
-To ensure **Accessibility** and **Reusability**, please follow these setup steps.
+## Requirements
 ### Prerequisites
 *   **R** (Version 4.0.0 or higher)
 *   **RStudio** (Recommended)
