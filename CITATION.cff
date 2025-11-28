@@ -1,0 +1,35 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "DFFP4LHM: R Scripts for the calculation of Land Use Heterogeneity (LHM) metrics considering Data-Fitness-for-Purpose (DFFP) principles"
+version: [1.0.0]
+date-released: [2025-11-30]
+url: "https://github.com/JKI-GDM/DFFP4LHM/"
+repository-code: "https://github.com/JKI-GDM/DFFP4LHM/"
+authors:
+  - given-names: Jannes
+    family-names: Saeurich
+    email: jannes.uhlott@julius-kuehn.de
+    affiliation: "Julius Kühn-Institut (JKI), Geodata Management"
+    orcid: "https://orcid.org/0009-0003-4948-128X"
+keywords:
+  - "land use heterogeneity"
+  - "LHM metrics"
+  - "data fitness for purpose"
+  - "DFFP"
+  - "spatial analysis"
+  - "agricultural landscapes"
+  - "landscape metrics"
+  - "data quality assessment"
+  - "R"
+  - "geospatial analysis"
+  - "agrosystems research"
+abstract: >
+  DFFP4LHM provides R scripts for calculating Land Use Heterogeneity (LHM) 
+  metrics while explicitly considering Data-Fitness-for-Purpose (DFFP) 
+  principles. The package enables researchers in agrosystems science to 
+  quantify landscape heterogeneity while assessing whether spatial data 
+  quality is adequate for the intended analytical purpose. The tools support 
+  FAIR data practices by incorporating data quality and fitness-for-use 
+  assessments into spatial heterogeneity analysis workflows.
+license: [Apache-2.0]
